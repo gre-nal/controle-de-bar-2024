@@ -9,6 +9,30 @@
 
     public decimal Total => Pedidos.Sum(p => p.Total);
 
+    public Garcom Garcom1
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public Mesa Mesa1
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
+    public Pedido Pedido
+    {
+        get => default;
+        set
+        {
+        }
+    }
+
     public void AdicionarPedido(Pedido pedido)
     {
         Pedidos.Add(pedido);
