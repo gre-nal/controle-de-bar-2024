@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControleBar.Dominio", "Cont
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orm", "Orm", "{9AA8B5F5-A4B7-4B03-A929-63DE100C5E2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleBar.Infraestrutura.Orm", "ControleBar.Infraestrutura.Orm\ControleBar.Infraestrutura.Orm.csproj", "{4C32C03E-285B-4487-BFDE-51EFCDDA12C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{320F5F47-CDDF-45AD-B520-82BF7FCCFBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{320F5F47-CDDF-45AD-B520-82BF7FCCFBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{320F5F47-CDDF-45AD-B520-82BF7FCCFBAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C32C03E-285B-4487-BFDE-51EFCDDA12C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C32C03E-285B-4487-BFDE-51EFCDDA12C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C32C03E-285B-4487-BFDE-51EFCDDA12C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C32C03E-285B-4487-BFDE-51EFCDDA12C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{A6D4548C-BFAD-4F50-9937-B4D282F36CE8} = {E68BDA86-2F52-4BA8-8930-14C47277689B}
 		{320F5F47-CDDF-45AD-B520-82BF7FCCFBAC} = {924FC8C9-B255-4C63-856E-EF4AE8038453}
 		{9AA8B5F5-A4B7-4B03-A929-63DE100C5E2D} = {CC00371E-017D-4EB2-BEB2-70D1359DCAE6}
+		{4C32C03E-285B-4487-BFDE-51EFCDDA12C6} = {9AA8B5F5-A4B7-4B03-A929-63DE100C5E2D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F602749B-4698-472B-B8FD-15503196A21B}

@@ -13,7 +13,6 @@
     <Folder Include="Mesa\" />
     <Folder Include="Garcom\" />
     <Folder Include="Produto\" />
-    <Folder Include="Pedido\" />
   </ItemGroup>
 
 </Project>
