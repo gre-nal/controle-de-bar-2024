@@ -1,5 +1,5 @@
-﻿using ControleBar.Dominio.Produto;
- 
+﻿using ControleBar.Dominio.Produto; 
+
 namespace ControleBar.Dominio.Pedido
 {
     public class Pedido : EntidadeBase
@@ -10,6 +10,7 @@ namespace ControleBar.Dominio.Pedido
             Quantidade = quantidade;
         }
         public int Id { get; set; }
+        public Pedido pedido { get; set; }
         public int Quantidade { get; set; }
         public decimal Total => Produto.Preco * Quantidade;
         public Produto Produto { get; set; }
