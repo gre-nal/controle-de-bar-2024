@@ -10,9 +10,13 @@
 
   <ItemGroup>
     <Folder Include="Conta\" />
-    <Folder Include="Mesa\" />
     <Folder Include="Garcom\" />
     <Folder Include="Produto\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
   </ItemGroup>
 
 </Project>
