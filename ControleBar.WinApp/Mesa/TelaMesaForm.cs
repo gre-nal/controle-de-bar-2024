@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControleBar.WinApp.Pedido;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,20 @@ namespace ControleBar.WinApp.Mesa
         public TelaMesaForm()
         {
             InitializeComponent();
+        }
+        private Mesa mesa;
+        private void btnGravar_Click(object sender, EventArgs e)
+        {
+            int numero = int.Parse(txtBNumeroMesa.Text);
+
+            List<string> erros = mesa.Validar();
+
+            if(erros.Count > 0)
+            {
+                TelaPrincipalForm.Instancia.AtualizarRodape(erros[0]);
+
+                DialogResult = DialogResult.None;
+            }
         }
     }
 }

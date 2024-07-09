@@ -1,10 +1,11 @@
 ﻿using ControleBar.WinApp.Compartilhado;
-using ControleBar.Dominio.Mesa;
+using ControleBar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
 
 namespace ControleBar.WinApp.Mesa
 {
@@ -30,23 +31,116 @@ namespace ControleBar.WinApp.Mesa
 
         public override void Adicionar()
         {
-            throw new NotImplementedException();
+            List<Mesa> mesasCadastradas = repositorioMesa.SelecionarTodos();
+
+            TelaQuestaoForm telaQuestao = new TelaMesaForm(mesasCadastradas);
+
+            DialogResult resultado = telaMesa.ShowDialog();
+
+            if (resultado != DialogResult.OK)
+                return;
+
+            Mesa novoRegistro = telaMesa.Mesa;
+
+            repositorioMesa.Cadastrar(novoRegistro);
+
+            CarregarRegistros();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{novoRegistro.Numero}\" foi criado com sucesso!");
         }
+    }
 
         public override void CarregarRegistros()
         {
-            throw new NotImplementedException();
+            List<Mesa> mesas = repositorioMesa.SelecionarTodos();
+
+        TabelaMesaControl.AtualizarRegistros(mesas);
+
         }
 
         public override void Editar()
         {
-            throw new NotImplementedException();
+        int idSelecionado = mesaQuestao.ObterRegistroSelecionado();
+
+        Mesa mesaSelecionada = repositorioMesa.SelecionarPorId(idSelecionado);
+
+        if (mesaSelecionada == null)
+        {
+            MessageBox.Show(
+                "Você precisa selecionar um registro para executar esta ação!",
+                "Aviso",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+
+            return;
         }
+
+        List<Mesa> mesaCadastradas = repositorioMesa.SelecionarTodos();
+
+        TelaMesaForm tela = new TelaQuestaoForm(materiasCadastradas);
+
+        telaMesa.Mesa = mesaSelecionada;
+
+        DialogResult resultado = telaMesa.ShowDialog();
+
+        if (resultado != DialogResult.OK)
+            return;
+
+        Mesa registroEditado = telaMesa.Mesa;
+
+        repositorioMesa.Editar(idSelecionado, registroEditado);
+
+        List<Mesa> mesaSelecionadas = telaMesa.mesaSelecionadas;
+
+        CarregarRegistros();
+
+        TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{registroEditado.Numero}\" foi editado com sucesso!");
+    }
 
         public override void Excluir()
         {
-            throw new NotImplementedException();
+        int idSelecionado = tabelaMesa.ObterRegistroSelecionado();
+
+        Mesa mesaSelecionada = repositorioMesa.SelecionarPorId(idSelecionado);
+
+        if (mesaSelecionada == null)
+        {
+            MessageBox.Show(
+                "Você precisa selecionar um registro para executar esta ação!",
+                "Aviso",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+
+            return;
         }
+
+        if (mesaSelecionada.UtilizadaEmTeste)
+        {
+            MessageBox.Show(
+                "Não é possível excluir uma questão sendo utilizada em um teste!",
+                "Aviso",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Warning);
+
+            return;
+        }
+
+        DialogResult resposta = MessageBox.Show(
+         $"Você deseja realmente excluir o registro \"{mesaSelecionada.Numero}\" ",
+         "Confirmar Exclusão",
+         MessageBoxButtons.YesNo,
+         MessageBoxIcon.Warning
+         );
+
+        if (resposta != DialogResult.Yes)
+            return;
+
+        repositorioMesa.Excluir(idSelecionado);
+
+        CarregarRegistros();
+
+        TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{mesaSelecionada.Numero}\" foi excluído com sucesso!");
+    }
 
         public override UserControl ObterListagem()
         {
