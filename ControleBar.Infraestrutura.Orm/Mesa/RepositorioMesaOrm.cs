@@ -7,7 +7,7 @@ using ControleBar.Infraestrutura.Orm.Compartilhado;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.SqlServer;
 
-namespace ControleBar.Infraestrutura.Orm.Mesa
+namespace ControleBar.Infraestrutura.Orm.ModuloMesa
 {
     public class RepositorioMesaOrm : IRepositorioMesa
     {

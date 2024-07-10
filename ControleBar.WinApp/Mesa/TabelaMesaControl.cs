@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ControleBar.WinApp.Mesa
+namespace ControleBar.WinApp.ModuloMesa
 {
     public partial class TabelaMesaControl : Form
     {

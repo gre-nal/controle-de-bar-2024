@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ControleBar.Dominio.Mesa
+namespace ControleBar.Dominio.ModuloMesa
 {
     public interface IContoladorVisualizavel
     {

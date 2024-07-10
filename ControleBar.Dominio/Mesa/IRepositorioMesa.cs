@@ -1,4 +1,4 @@
-﻿namespace ControleBar.Dominio.Mesa
+﻿namespace ControleBar.Dominio.ModuloMesa
 {
     public interface IRepositorioMesa
     {

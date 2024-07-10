@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
+using ControleBar.Dominio.ModuloMesa;
 
-namespace ControleBar.WinApp.Mesa
+namespace ControleBar.WinApp.ModuloMesa
 {
     public class ControladorMesa : ControladorBase
     {
@@ -27,13 +28,13 @@ namespace ControleBar.WinApp.Mesa
         {
             this.tabelaMesa = tabelaMesa;
             this.repositorioMesa = repositorioMesa;
-        } 
+        }
 
         public override void Adicionar()
         {
             List<Mesa> mesasCadastradas = repositorioMesa.SelecionarTodos();
 
-            TelaQuestaoForm telaQuestao = new TelaMesaForm(mesasCadastradas);
+            TelaMesaForm telaMesa = new TelaMesaForm(mesasCadastradas);
 
             DialogResult resultado = telaMesa.ShowDialog();
 
@@ -48,103 +49,106 @@ namespace ControleBar.WinApp.Mesa
 
             TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{novoRegistro.Numero}\" foi criado com sucesso!");
         }
-    }
+
+        public override UserControl ObterListagem()
+        {
+            if (tabelaMesa == null)
+                tabelaMesa = new TabelaMesaControl();
+
+            CarregarRegistros();
+
+            return tabelaMesa;
+        }
 
         public override void CarregarRegistros()
         {
             List<Mesa> mesas = repositorioMesa.SelecionarTodos();
 
-        TabelaMesaControl.AtualizarRegistros(mesas);
-
+            TabelaMesaControl.AtualizarRegistros(mesas);
         }
 
         public override void Editar()
         {
-        int idSelecionado = mesaQuestao.ObterRegistroSelecionado();
+            int idSelecionado = mesaQuestao.ObterRegistroSelecionado();
 
-        Mesa mesaSelecionada = repositorioMesa.SelecionarPorId(idSelecionado);
+            Mesa mesaSelecionada = repositorioMesa.SelecionarPorId(idSelecionado);
 
-        if (mesaSelecionada == null)
-        {
-            MessageBox.Show(
-                "Você precisa selecionar um registro para executar esta ação!",
-                "Aviso",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning);
+            if (mesaSelecionada == null)
+            {
+                MessageBox.Show(
+                    "Você precisa selecionar um registro para executar esta ação!",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
 
-            return;
+                return;
+            }
+
+            List<Mesa> mesaCadastradas = repositorioMesa.SelecionarTodos();
+
+            TelaMesaForm tela = new TelaQuestaoForm(materiasCadastradas);
+
+            telaMesa.Mesa = mesaSelecionada;
+
+            DialogResult resultado = telaMesa.ShowDialog();
+
+            if (resultado != DialogResult.OK)
+                return;
+
+            Mesa registroEditado = telaMesa.Mesa;
+
+            repositorioMesa.Editar(idSelecionado, registroEditado);
+
+            List<Mesa> mesaSelecionadas = telaMesa.mesaSelecionadas;
+
+            CarregarRegistros();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{registroEditado.Numero}\" foi editado com sucesso!");
         }
-
-        List<Mesa> mesaCadastradas = repositorioMesa.SelecionarTodos();
-
-        TelaMesaForm tela = new TelaQuestaoForm(materiasCadastradas);
-
-        telaMesa.Mesa = mesaSelecionada;
-
-        DialogResult resultado = telaMesa.ShowDialog();
-
-        if (resultado != DialogResult.OK)
-            return;
-
-        Mesa registroEditado = telaMesa.Mesa;
-
-        repositorioMesa.Editar(idSelecionado, registroEditado);
-
-        List<Mesa> mesaSelecionadas = telaMesa.mesaSelecionadas;
-
-        CarregarRegistros();
-
-        TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{registroEditado.Numero}\" foi editado com sucesso!");
-    }
 
         public override void Excluir()
         {
-        int idSelecionado = tabelaMesa.ObterRegistroSelecionado();
+            int idSelecionado = tabelaMesa.ObterRegistroSelecionado();
 
-        Mesa mesaSelecionada = repositorioMesa.SelecionarPorId(idSelecionado);
+            Mesa mesaSelecionada = repositorioMesa.SelecionarPorId(idSelecionado);
 
-        if (mesaSelecionada == null)
-        {
-            MessageBox.Show(
-                "Você precisa selecionar um registro para executar esta ação!",
-                "Aviso",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning);
+            if (mesaSelecionada == null)
+            {
+                MessageBox.Show(
+                    "Você precisa selecionar um registro para executar esta ação!",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
 
-            return;
+                return;
+            }
+
+            if (mesaSelecionada.UtilizadaEmTeste)
+            {
+                MessageBox.Show(
+                    "Não é possível excluir uma questão sendo utilizada em um teste!",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            DialogResult resposta = MessageBox.Show(
+             $"Você deseja realmente excluir o registro \"{mesaSelecionada.Numero}\" ",
+             "Confirmar Exclusão",
+             MessageBoxButtons.YesNo,
+             MessageBoxIcon.Warning
+             );
+
+            if (resposta != DialogResult.Yes)
+                return;
+
+            repositorioMesa.Excluir(idSelecionado);
+
+            CarregarRegistros();
+
+            TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{mesaSelecionada.Numero}\" foi excluído com sucesso!");
         }
-
-        if (mesaSelecionada.UtilizadaEmTeste)
-        {
-            MessageBox.Show(
-                "Não é possível excluir uma questão sendo utilizada em um teste!",
-                "Aviso",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Warning);
-
-            return;
-        }
-
-        DialogResult resposta = MessageBox.Show(
-         $"Você deseja realmente excluir o registro \"{mesaSelecionada.Numero}\" ",
-         "Confirmar Exclusão",
-         MessageBoxButtons.YesNo,
-         MessageBoxIcon.Warning
-         );
-
-        if (resposta != DialogResult.Yes)
-            return;
-
-        repositorioMesa.Excluir(idSelecionado);
-
-        CarregarRegistros();
-
-        TelaPrincipalForm.Instancia.AtualizarRodape($"O registro \"{mesaSelecionada.Numero}\" foi excluído com sucesso!");
-    }
-
-        public override UserControl ObterListagem()
-        {
-            throw new NotImplementedException();
-        }
-    }
+    }   
 }

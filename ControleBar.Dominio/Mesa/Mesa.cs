@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace ControleBar.Dominio.Mesa
+namespace ControleBar.Dominio.ModuloMesa
 {
     public class Mesa : EntidadeBase
     {
