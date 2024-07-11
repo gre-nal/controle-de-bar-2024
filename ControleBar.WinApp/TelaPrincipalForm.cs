@@ -165,5 +165,8 @@ public partial class TelaPrincipalForm : Form
 
     private void homeToolStripMenuItem_Click(object sender, EventArgs e)
     {
+        var telaInicial = new TelaPrincipalForm();
+        telaInicial.Show();
+        Hide();
     }
 }
