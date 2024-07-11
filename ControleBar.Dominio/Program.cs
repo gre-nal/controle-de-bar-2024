@@ -1,6 +1,8 @@
-﻿class Program
+﻿namespace ControleBar.Dominio;
+
+internal class Program
 {
-    static void Main()
+    private static void Main()
     {
     }
 }
